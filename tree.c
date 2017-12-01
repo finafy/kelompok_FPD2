@@ -35,5 +35,8 @@ void main(int argc, char *argv[]){
 		ls(argv[1],0);
 	}
 	else printf("%s [error opening dir]\n",argv[1]);
-	printf("\n%d directories, %d files\n", dr,fl-dr);
+	if(dr==1&&(fl-dr)==1) printf("\n%d directory, %d file\n", dr,fl-dr);
+	else if((fl-dr)==1) printf("\n%d directories, %d file\n", dr,fl-dr);
+	else if(dr==1) printf("\n%d directory, %d files\n", dr,fl-dr);
+	else printf("\n%d directories, %d files\n", dr,fl-dr);
 }
