@@ -15,7 +15,16 @@ int main(int argc, char *argv[])
 	
 	else
 	{
-		unlink(argv[1]);
+	        for(i=1;i<argc;i++)
+		{
+
+		     if(unlink(argv[i]<0)
+			{
+				printf(2,"rm: can't remove '%s' : No such file\n", argv[i]);
+
+				break;
+			}
+		}
 		exit();
 	}
 

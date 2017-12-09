@@ -9,10 +9,16 @@ void cp(char *src, char *dst){
 		char copy[1000];
 		sprintf(copy,"%s/%s",dst,src);
 		out=fopen(copy,"w+");
-		char str;
-		while((str=fgetc(in))!=EOF) fputc(str,out);
-		fclose(in);
-		fclose(out);
+		if(in==NULL){
+			fclose(out);
+			return;
+		}
+		else{
+			char str;
+			while((str=fgetc(in))!=EOF) fputc(str,out);
+			fclose(in);
+			fclose(out);
+		}
 }
 void cpnew(char *src, char *dst){
 		FILE *in,*out;
@@ -37,14 +43,16 @@ void cpdir(char *src, char *dst){
 			if(strcmp(ent->d_name,".")==0) continue;
 			else if(strcmp(ent->d_name,"..")==0) continue;
 			else{
+				char now[1000];
+				sprintf(now,"%s",ent->d_name);
 				if(ent->d_type==DT_DIR){
 					char next[1000];
-					sprintf(next,"%s/%s",src,ent->d_name);
+					sprintf(next,"%s/%s",src,now);
 					cpdir(next,dst);
 					continue;
 				}
 				else{
-					cp(ent->d_name,dnew);
+					cp(now,dnew);
 					continue;
 				}
 			}
@@ -67,7 +75,7 @@ void main(int argc, char *argv[]){
 				DIR *dir;
 				char *dr=".";
 				struct dirent *ent;
-				if((dir=opendir(dr))!=NULL){				
+				if((dir=opendir(dr))!=NULL){	
 					while((ent=readdir(dir))!=NULL){
 						if(strcmp(ent->d_name,argv[i])==0){
 							if(ent->d_type!=DT_DIR){
